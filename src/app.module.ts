@@ -8,6 +8,8 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { InterestsModule } from './modules/interests/interests.module';
+import { ProjectsModule } from './modules/projects/projects.module';
+import { InvestmentsModule } from './modules/investments/investments.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { InterestsModule } from './modules/interests/interests.module';
     AuthModule,
     AdminModule,
     InterestsModule,
+    ProjectsModule,
+    InvestmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

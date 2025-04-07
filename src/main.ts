@@ -14,15 +14,22 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('QVEMA API')
+    .setDescription('API de mise en relation entre entrepreneurs et investisseurs')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('users', 'Gestion des utilisateurs')
+    .addTag('auth', 'Authentification')
+    .addTag('interests', 'Gestion des centres d\'intérêt')
+    .addTag('projects', 'Gestion des projets')
+    .addTag('investments', 'Gestion des investissements')
+    .addTag('admin', 'Administration')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
-  app.useGlobalPipes(new ValidationPipe()); //pour les vérifications class-validator
-  await app.listen(process.env.PORT ?? 3000);
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+  console.log(`L'application est disponible sur ${await app.getUrl()}`);
 }
 bootstrap();
