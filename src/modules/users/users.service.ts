@@ -43,10 +43,11 @@ export class UsersService {
     return plainToInstance(User, savedUser); //pour exclure le mdp de l'exposition
   }
 
-  async findByEmail(email: string) {
-    return plainToInstance(
-      User,
-      await this.userRepository.findOneBy({ email }),
-    );
+  async findByEmail(email: string): Promise<User> {
+    return plainToInstance(User, await this.userRepository.findOneBy({ email }));
+  }
+
+  async findByEmailWithPassword(email: string): Promise<User | null> {
+    return this.userRepository.findOneBy({ email });
   }
 }

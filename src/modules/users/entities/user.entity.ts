@@ -18,7 +18,7 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  // @Exclude({ toClassOnly: true })
+  @Exclude()
   @Column()
   password: string;
 
