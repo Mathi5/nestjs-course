@@ -3,9 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { UserRole } from '../types-dto/user-role.type';
 import { Exclude } from 'class-transformer';
+import { Interest } from '../../interests/entities/interest.entity';
 
 @Entity()
 export class User {
@@ -15,7 +18,7 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Exclude() //+modification à faire dans le service
+  // @Exclude({ toClassOnly: true })
   @Column()
   password: string;
 
@@ -30,4 +33,12 @@ export class User {
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
+
+  @ManyToMany(() => Interest, (interest) => interest.users)
+  @JoinTable({
+    name: 'user_interests',
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'interest_id', referencedColumnName: 'id' }
+  })
+  interests: Interest[];
 }

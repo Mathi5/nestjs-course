@@ -44,10 +44,9 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    const user = plainToInstance(
+    return plainToInstance(
       User,
       await this.userRepository.findOneBy({ email }),
     );
-    return user;
   }
 }

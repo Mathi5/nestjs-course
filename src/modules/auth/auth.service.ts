@@ -13,7 +13,15 @@ export class AuthService {
 
   async validateUser(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
-    if (!user || (await !bcrypt.compare(password, user.password))) {
+    console.log('UserLogin Service validate : ', user);
+    if (!user) {
+      throw new UnauthorizedException('Identifiants incorrects');
+    }
+
+    console.log('Password:', password);
+    console.log('User Password:', user.password);
+
+    if (!(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Identifiants incorrects');
     }
 
@@ -21,6 +29,7 @@ export class AuthService {
   }
 
   async login(user: User) {
+    console.log('UserLogin Service : ', user);
     const validatedUser = await this.validateUser(user.email, user.password);
     const payload = {
       email: validatedUser.email,
