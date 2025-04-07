@@ -13,6 +13,13 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
+  // Configurez CORS ici
+  app.enableCors({
+    origin: ['http://localhost:3000'], // URL de votre frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('QVEMA API')
     .setDescription('API de mise en relation entre entrepreneurs et investisseurs')
